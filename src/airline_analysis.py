@@ -207,7 +207,7 @@ if __name__ == '__main__':
     df_2015 = sql_to_dataframe(sql_str, inputs, create_temp=True)
 
     # Read manufacturer names
-    mfr_df = pd.read_csv('ACFTREF.txt')
+    mfr_df = pd.read_csv('../data/ACFTREF.txt')
     cols = list(mfr_df.columns)
     column_names = [col.decode('ascii', 'ignore') for col in cols]
     mfr_df.columns = column_names
@@ -238,9 +238,9 @@ if __name__ == '__main__':
     years = c.fetchall()
     m = load_map('base_map.pkl')
 
-    plotyears = False
+    plotyears = True
     if plotyears:
-        year_ranges = ['(2006, 2007)', '(2008, 2009)', '(2010, 2011)', '(2012, 2013)', '(2014, 2015)']
+        year_ranges = ['(2006, 2007, 2008)', '(2009, 2010, 2011)', '(2012, 2013)', '(2014, 2015)']
         for year in year_ranges:
             print year
             c.execute('''SELECT Year
