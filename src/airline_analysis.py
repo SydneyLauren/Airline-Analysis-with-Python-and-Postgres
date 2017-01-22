@@ -105,6 +105,7 @@ def plot_ontime_map(m, coord_file, query_output, image_name):
     plt.text(xtext, y_start - 900000, '85% - 90% on time', color=[1, 1, 1], va='center', fontsize=18)
     plt.text(xtext, y_start - 1200000, '>90% on time', color=[1, 1, 1], va='center', fontsize=18)
 
+    plt.text(xtext, 550000, image_name[11:len(image_name) - 5], color=[1, 1, 1], fontsize=24)
     # load the city coordinates
     coord_dict = {}
     with open(coord_file) as f:
@@ -268,7 +269,7 @@ if __name__ == '__main__':
     years = c.fetchall()
     m = load_map('base_map.pkl')
 
-    plotyears = False
+    plotyears = True
     if plotyears:
         year_ranges = ['(2006, 2007, 2008)', '(2009, 2010, 2011)', '(2012, 2013)', '(2014, 2015)']
         for year in year_ranges:
@@ -294,11 +295,6 @@ if __name__ == '__main__':
     Where a.Year = 2015 ORDER BY pct_improve''')
 
     plot_pctchange(m, 'city_coordinates.txt', c.fetchall(), '../images/pct_change06-15.png')
-    plt.show()
-
-    c.execute("SELECT COUNT(*) FROM ontime WHERE Year = 2010")
-    printc.fetchall()
-    asdasd
 
     '''4. What happened to Sea-Tac Airport on-time performance during the 2006-2015 time period?
     How did that compare to the average of all airports?'''
