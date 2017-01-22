@@ -88,6 +88,23 @@ def plot_ontime_map(m, coord_file, query_output, image_name):
     create map image by ontime performance
     '''
     fig = plt.figure(figsize=(15, 12))
+
+    m.bluemarble()
+    xpt = 500000
+    xtext = xpt + 120000
+    y_start = 5500000
+    plt.plot(xpt, y_start, 'c.', markersize=3)
+    plt.plot(xpt, y_start - 300000, 'c.', markersize=6)
+    plt.plot(xpt, y_start - 600000, 'c.', markersize=9)
+    plt.plot(xpt, y_start - 900000, 'c.', markersize=14)
+    plt.plot(xpt, y_start - 1200000, 'c.', markersize=20)
+
+    plt.text(xtext, y_start, '< 75% on time', color=[1, 1, 1], va='center', fontsize=18)
+    plt.text(xtext, y_start - 300000, '75% - 80% on time', color=[1, 1, 1], va='center', fontsize=18)
+    plt.text(xtext, y_start - 600000, '80% - 85% on time', color=[1, 1, 1], va='center', fontsize=18)
+    plt.text(xtext, y_start - 900000, '85% - 90% on time', color=[1, 1, 1], va='center', fontsize=18)
+    plt.text(xtext, y_start - 1200000, '>90% on time', color=[1, 1, 1], va='center', fontsize=18)
+
     # load the city coordinates
     coord_dict = {}
     with open(coord_file) as f:
@@ -115,7 +132,10 @@ def plot_ontime_map(m, coord_file, query_output, image_name):
             alp = 0.9
 
         plt.plot(city_coords[0], city_coords[1], 'c.', markersize=m_size, alpha=alp)
+
+        # plt.plot()
         m.bluemarble()
+
     plt.savefig(image_name, bbox_inches='tight')
     plt.close('all')
 
@@ -147,6 +167,16 @@ def plot_pctchange(m, coord_file, query_output, image_name):
 
         plt.plot(city_coords[0], city_coords[1], '.', markersize=12, color=color, alpha=alp)
         m.bluemarble()
+    xpt = 500000
+    xtext = xpt + 120000
+    y_start = 5500000
+    plt.plot(xpt, y_start, 'r.', markersize=12)
+    plt.plot(xpt, y_start - 300000, '.', color=[1, .85, 0], markersize=12)
+    plt.plot(xpt, y_start - 600000, '.', color=[.3, 1, .2], markersize=12)
+
+    plt.text(xtext, y_start, 'Pct Change < -5%', color=[1, 1, 1], va='center', fontsize=18)
+    plt.text(xtext, y_start - 300000, '-5% < Pct Change < 5%', color=[1, 1, 1], va='center', fontsize=18)
+    plt.text(xtext, y_start - 600000, 'Pct Change > 5%', color=[1, 1, 1], va='center', fontsize=18)
     plt.savefig(image_name, bbox_inches='tight')
     plt.close('all')
 
@@ -238,7 +268,7 @@ if __name__ == '__main__':
     years = c.fetchall()
     m = load_map('base_map.pkl')
 
-    plotyears = True
+    plotyears = False
     if plotyears:
         year_ranges = ['(2006, 2007, 2008)', '(2009, 2010, 2011)', '(2012, 2013)', '(2014, 2015)']
         for year in year_ranges:
@@ -266,6 +296,9 @@ if __name__ == '__main__':
     plot_pctchange(m, 'city_coordinates.txt', c.fetchall(), '../images/pct_change06-15.png')
     plt.show()
 
+    c.execute("SELECT COUNT(*) FROM ontime WHERE Year = 2010")
+    printc.fetchall()
+    asdasd
 
     '''4. What happened to Sea-Tac Airport on-time performance during the 2006-2015 time period?
     How did that compare to the average of all airports?'''
